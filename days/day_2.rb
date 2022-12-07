@@ -36,6 +36,7 @@ end
 WIN_CHART = { 'A' => 'B', 'B' => 'C', 'C' => 'A' }
 LOSE_CHART = {'A' => 'C', 'B' => 'A', 'C' => 'B'}
 MOVES = ['A', 'B', 'C']
+ACTIONS = {'X' => :lose, 'Y' => :tie, 'Z' => :win}
 
 def win(elf); MOVES.index(WIN_CHART[elf]) + 7; end
 def lose(elf); MOVES.index(LOSE_CHART[elf]) + 1; end
@@ -47,14 +48,7 @@ def convert_input(str)
 end
 
 def evaluate_round(elf, action)
-  case action
-  when 'X'
-    lose(elf)
-  when 'Y'
-    tie(elf)
-  when 'Z'
-    win(elf)
-  end
+  send ACTIONS[action], elf
 end
 
 def my_score(rounds)
