@@ -8,9 +8,7 @@
 #   - If the head is ever two steps directly up, down, left, or right from the tail, the tail must move one step in that direction so it remains close enough.
 #   - If the head and tail aren't touching and aren't in the same row or column, the Tail will move diagonally 
 
-#   Assuming the head and tail start in the same position, 
-# need plank length 
-#   plank_length = Math.sqrt((h * G) / (c ** 3))
+#   Assume the head and tail start in the same position, 
 
 # if the sum of Heads row and column is ever 2 more than the sum of the Tails row and column 
 #   move the Tail to be next to the head

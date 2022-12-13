@@ -16,20 +16,18 @@ instructions = File.read('input_10.txt').split("\n").map(&:split)
 class Communicator
   LOG_CYCLE = [20, 60, 100, 140, 180, 220]
   LIT = '#'
-  DARK = '.'
+  DARK = ' '
+
   def initialize
     @x_register = 1
     @cycle = 0
     @signal_strengths = []
-    @test_at = 20
     @pixels = Array.new(6).map {Array.new(40)}
   end
 
   def addx(value)
     2.times do |n|
-      mark_pixel
-      self.cycle += 1
-      send_signal if LOG_CYCLE.include?(cycle)
+      noop
     end
     self.x_register += value
   end
@@ -37,7 +35,7 @@ class Communicator
   def noop
     mark_pixel
     self.cycle += 1
-    send_signal if LOG_CYCLE.include?(cycle)
+    send_signal_strength if LOG_CYCLE.include?(cycle)
   end
 
   def sum_signals
@@ -52,7 +50,7 @@ class Communicator
 
   private
 
-  attr_accessor :cycle, :test_at, :x_register
+  attr_accessor :cycle, :x_register
   attr_reader :signal_strengths, :pixels
 
   def mark_pixel
@@ -62,20 +60,14 @@ class Communicator
     pixels[layer][node] = state
   end
 
-  def signal_strength
-    cycle * x_register
-  end
-
-  def send_signal
-    signal_strengths << signal_strength
-    self.test_at += 40
+  def send_signal_strength
+    signal_strengths << (cycle * x_register)
   end
 end
 
 com = Communicator.new
 
 instructions.each do |method, value|
-  method = method.to_sym
   value = value.to_i unless value.nil?
   value ? com.send(method, value) : com.send(method)
 end
